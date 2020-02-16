@@ -18,16 +18,8 @@ class Routing
             $_GET['action'] = 'input';
         }
 
-        if (($_GET['action'] != 'login_page') && ($_GET['action'] != 'login') && ($_GET['action'] != 'login_failed')) {
-            if (!file_exists(get_folder_login() . 'user.txt')) {
-                $frontpage->login_page();
-                exit;
-            } elseif (!file_get_contents(get_folder_login() . 'user.txt') == $_SERVER['REMOTE_ADDR']) {
-                $frontpage->login_page();
-                exit;
-            }
-        }
-
+        $login->login_check();
+        
         if ($_GET['action'] == 'input') {
             $frontpage->input_page();
         } elseif ($_GET['action'] == 'login_page') {
