@@ -1,4 +1,6 @@
 <?php
+namespace BBS\test\yudai\work\Login;
+use BBS\test\yudai\work\Frontpage\Frontpage;
 class Login
 {
     public function login()

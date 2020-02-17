@@ -1,16 +1,24 @@
 <?php
-require_once('../config.php');
+
+namespace BBS\Routing;
+
+require_once('../Config.php');
+require_once('../Login.php');
 require_once('../Post.php');
 require_once('../Frontpage.php');
 require_once('../Delete.php');
-require_once('../Login.php');
+
+use BBS\test\yudai\work\Login\Login;
+use BBS\test\yudai\work\Post\Post;
+use BBS\test\yudai\work\Frontpage\Frontpage;
+use BBS\test\yudai\work\Delete\Delete;
 
 class Routing
 {
     public function execute()
     {
-        $post = new Post();
         $login = new Login();
+        $post = new Post();
         $frontpage = new Frontpage();
         $delete = new Delete();
 
