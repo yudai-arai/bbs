@@ -3,19 +3,20 @@
 namespace BBS\test\yudai\work\Post;
 
 use BBS\test\yudai\work\Frontpage\Frontpage;
+use BBS\Config\Config;
 
 class Post
 {
     public function save_page()
     {
-    require_once('Frontpage.php');
+    $config = new Config();
     $frontpage = new Frontpage;
     if ($_POST['text'] == '') {
         echo '本文を入力してください。<br>';
         echo '<a href="index.php?action=input">入力画面はこちら</a>';
         exit;
     }
-    file_put_contents(get_folder() . date("YmdHis") . '.txt', $_POST['nickname'] .'|'.$_POST['title'] .'|'.$_POST['text']);
+    file_put_contents($config->get_folder() . date("YmdHis") . '.txt', $_POST['nickname'] .'|'.$_POST['title'] .'|'.$_POST['text']);
     echo '<html>
     <body>
     <p>保存しました</p>';
@@ -27,7 +28,6 @@ class Post
 
     public function contents_page()
     {
-    require_once('Frontpage.php');
     $frontpage = new Frontpage;
     echo "<html>
         <body>";
