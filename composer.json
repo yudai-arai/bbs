@@ -1,0 +1,16 @@
+{
+    "name": "yudai/bbs",
+    "description": "BBS",
+    "authors": [
+        {
+            "name": "yudai-arai",
+            "email": "glass-turcky@i.softbank.jp"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "BBS\\": "./"
+        }
+    }
+}
