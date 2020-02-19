@@ -3,13 +3,14 @@
 namespace BBS\test\yudai\work\Delete;
 
 use BBS\test\yudai\work\Frontpage\Frontpage;
+use BBS\Config\Config;
 
 class Delete
 {
     public function delete_file()
     {
-        require_once('Frontpage.php');
         $frontpage = new Frontpage;
+        $config = new Config();
         if (!array_key_exists('filename', $_POST)) {
             $frontpage->delete_error_page();
             exit;
@@ -18,7 +19,7 @@ class Delete
             exit;
         }else{
             foreach ($_POST['filename'] as $value) {
-                unlink(get_folder() . $value . '.txt');
+                unlink($config->get_folder() . $value . '.txt');
                 $frontpage->delete_success_page();
                 exit;
             }
