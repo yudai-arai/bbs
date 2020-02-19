@@ -1,11 +1,13 @@
 <?php
 namespace BBS\test\yudai\work\Login;
 use BBS\test\yudai\work\Frontpage\Frontpage;
+use BBS\Config\Config;
 class Login
 {
     public function login()
     {
         $frontpage = new Frontpage();
+        $config = new Config();
         if (array_key_exists('id', $_POST) && array_key_exists('password', $_POST)) {
             if (($_POST['id'] == '') || ($_POST['password'] == '')) {
                 $frontpage->login_inputmiss_page();
@@ -14,7 +16,7 @@ class Login
         }
         if (array_key_exists('id', $_POST) && array_key_exists('password', $_POST)) {
             if (($_POST['id'] == 'user') && ($_POST['password'] == 'password1!')) {
-                file_put_contents(get_folder_login() . $_POST['id'] . '.txt', $_SERVER['REMOTE_ADDR']);
+                file_put_contents($config->get_folder_login() . $_POST['id'] . '.txt', $_SERVER['REMOTE_ADDR']);
                 $frontpage->login_success_page();
             } else {
                 $frontpage->login_failed_page();
@@ -24,11 +26,12 @@ class Login
     public function login_check()
     {
         $frontpage = new Frontpage();
+        $config = new Config();
         if (($_GET['action'] != 'login_page') && ($_GET['action'] != 'login') && ($_GET['action'] != 'login_failed')) {
-            if (!file_exists(get_folder_login() . 'user.txt')) {
+            if (!file_exists($config->get_folder_login() . 'user.txt')) {
                 $frontpage->login_page();
                 exit;
-            } elseif (!file_get_contents(get_folder_login() . 'user.txt') == $_SERVER['REMOTE_ADDR']) {
+            } elseif (!file_get_contents($config->get_folder_login() . 'user.txt') == $_SERVER['REMOTE_ADDR']) {
                 $frontpage->login_page();
                 exit;
             }

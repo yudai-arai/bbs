@@ -2,6 +2,8 @@
 
 namespace BBS\test\yudai\work\Frontpage;
 
+use BBS\Config\Config;
+
 class Frontpage
 {
     public function input_page()
@@ -34,9 +36,10 @@ class Frontpage
 
     public function list_page()
     {
+        $config = new Config();
         echo "<html>
        <body>";
-        $list = glob(get_folder() . '*.txt');
+        $list = glob($config->get_folder() . '*.txt');
         echo("<form action='index.php?action=list' method='POST'>");
         if (array_key_exists('search_file', $_POST)) {
             echo("検索条件入力：<input type='text' name='search_file' value='{$_POST['search_file']}'>");
@@ -77,7 +80,7 @@ class Frontpage
             for ($index = 0; $index < $limit; $index++) {
                 if (($start + $index + 1) <= $cnt) {
                     $name = $list[$start + $index];
-                    echo('<a href= "' . get_url('contents') . '&text=' . $name . '"' . '>' . basename($name, ".txt") . '</a>');
+                    echo('<a href= "' . $config->get_url('contents') . '&text=' . $name . '"' . '>' . basename($name, ".txt") . '</a>');
                     $this->echo_break_line('<input type="checkbox"  name="filename[]" value="' . basename($name, ".txt") . '">');
                 } else {
                     break;
@@ -86,18 +89,18 @@ class Frontpage
         }
         echo '</form>';
         if ($page > 1) {
-            $this->echo_pipeline('<a href="' . get_url('list') . '&page=' . ($page - 1) . '">前へ</a>');
+            $this->echo_pipeline('<a href="' . $config->get_url('list') . '&page=' . ($page - 1) . '">前へ</a>');
         }
         for ($link = 0; $link < $maxpage; $link++) {
             $page_num = $link + 1;
-            $this->echo_pipeline('<a href="' . get_url('list') . '&page=' . $page_num . '"' . '>' . $page_num . '</a>');
+            $this->echo_pipeline('<a href="' . $config->get_url('list') . '&page=' . $page_num . '"' . '>' . $page_num . '</a>');
         }
         if ($page < $maxpage) {
-            echo '<a href="' . get_url('list') . '&page=' . ($page + 1) . '">次へ</a>';
+            echo '<a href="' . $config->get_url('list') . '&page=' . ($page + 1) . '">次へ</a>';
         }
         echo '<br>';
-        echo "<input type=\"submit\" onclick=\"location.href='" . get_url('input') . "'\" value=\"追加\">";
-        echo "<input type=\"submit\" onclick=\"location.href='" . get_url('logout') . "'\" value=\"ログアウト\">
+        echo "<input type=\"submit\" onclick=\"location.href='" . $config->get_url('input') . "'\" value=\"追加\">";
+        echo "<input type=\"submit\" onclick=\"location.href='" . $config->get_url('logout') . "'\" value=\"ログアウト\">
         </body>
         </html>";
     }
@@ -159,9 +162,10 @@ class Frontpage
 
     public function logout_page()
     {
+        $config = new Config();
         echo '<html>
     <body>';
-        unlink(get_folder_login() . 'user.txt');
+        unlink($config->get_folder_login() . 'user.txt');
         echo 'ログアウトしました。<br>';
         echo '<a href="index.php?action=login_page">ログインはこちら</a>
     </body>

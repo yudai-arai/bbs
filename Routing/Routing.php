@@ -2,11 +2,7 @@
 
 namespace BBS\Routing;
 
-require_once('../Config.php');
-require_once('../Login.php');
-require_once('../Post.php');
-require_once('../Frontpage.php');
-require_once('../Delete.php');
+
 
 use BBS\test\yudai\work\Login\Login;
 use BBS\test\yudai\work\Post\Post;
