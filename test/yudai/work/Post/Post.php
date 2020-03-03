@@ -13,14 +13,14 @@ class Post
     $frontpage = new Frontpage;
     if ($_POST['text'] == '') {
         echo '本文を入力してください。<br>';
-        echo '<a href="index.php?action=input">入力画面はこちら</a>';
+        echo '<a href="/input">入力画面はこちら</a>';
         exit;
     }
     file_put_contents($config->get_folder() . date("YmdHis") . '.txt', $_POST['nickname'] .'|'.$_POST['title'] .'|'.$_POST['text']);
     echo '<html>
     <body>
     <p>保存しました</p>';
-    $frontpage->echo_break_line('<a href="index.php?action=input">入力画面はこちら</a>');
+    $frontpage->echo_break_line('<a href="/input">入力画面はこちら</a>');
     $frontpage->list_page_link();
     echo '</body>
     </html>';
@@ -29,10 +29,11 @@ class Post
     public function contents_page()
     {
     $frontpage = new Frontpage;
+    $config = new Config();
     echo "<html>
         <body>";
     if (array_key_exists('text', $_GET)) {
-        $filecontents = htmlspecialchars(file_get_contents($_GET['text']));
+        $filecontents = htmlspecialchars(file_get_contents($config->get_folder().$_GET['text']));
         $filecontent = explode( '|', $filecontents);
         echo 'ニックネーム：' . $filecontent[0];
         echo '<hr>';

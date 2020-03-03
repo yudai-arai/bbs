@@ -10,7 +10,7 @@ class Frontpage
     {
         echo "<html>";
         echo "<body>";
-        echo("<form action='index.php?action=save' method='post'>");
+        echo("<form action='/save' method='post'>");
         $this->echo_break_line("ニックネーム：<textarea name='nickname'></textarea>");
         $this->echo_break_line("タイトル：<textarea name='title'></textarea>");
         $this->echo_break_line("コメント：<textarea name='text'></textarea>");
@@ -40,7 +40,7 @@ class Frontpage
         echo "<html>
        <body>";
         $list = glob($config->get_folder() . '*.txt');
-        echo("<form action='index.php?action=list' method='POST'>");
+        echo("<form action='/list' method='POST'>");
         if (array_key_exists('search_file', $_POST)) {
             echo("検索条件入力：<input type='text' name='search_file' value='{$_POST['search_file']}'>");
         } else {
@@ -60,7 +60,7 @@ class Frontpage
         }
         $cnt = count($list);
         echo '</form>';
-        echo '<form action="index.php?action=delete" method="post">';
+        echo '<form action="/delete" method="post">';
         $this->echo_break_line('<input type="submit" value="削除"></input>');
         if (!(array_key_exists('page', $_GET))) {
             $page = 1;
@@ -80,7 +80,7 @@ class Frontpage
             for ($index = 0; $index < $limit; $index++) {
                 if (($start + $index + 1) <= $cnt) {
                     $name = $list[$start + $index];
-                    echo('<a href= "' . $config->get_url('contents') . '&text=' . $name . '"' . '>' . basename($name, ".txt") . '</a>');
+                    echo('<a href= "' . $config->get_url('/contents') . '?text=' . basename($name) . '"' . '>' . basename($name, ".txt") . '</a>');
                     $this->echo_break_line('<input type="checkbox"  name="filename[]" value="' . basename($name, ".txt") . '">');
                 } else {
                     break;
@@ -89,25 +89,25 @@ class Frontpage
         }
         echo '</form>';
         if ($page > 1) {
-            $this->echo_pipeline('<a href="' . $config->get_url('list') . '&page=' . ($page - 1) . '">前へ</a>');
+            $this->echo_pipeline('<a href="' . $config->get_url('/list') . '?page=' . ($page - 1) . '">前へ</a>');
         }
         for ($link = 0; $link < $maxpage; $link++) {
             $page_num = $link + 1;
-            $this->echo_pipeline('<a href="' . $config->get_url('list') . '&page=' . $page_num . '"' . '>' . $page_num . '</a>');
+            $this->echo_pipeline('<a href="' . $config->get_url('/list') . '?page=' . $page_num . '"' . '>' . $page_num . '</a>');
         }
         if ($page < $maxpage) {
-            echo '<a href="' . $config->get_url('list') . '&page=' . ($page + 1) . '">次へ</a>';
+            echo '<a href="' . $config->get_url('/list') . '?page=' . ($page + 1) . '">次へ</a>';
         }
         echo '<br>';
-        echo "<input type=\"submit\" onclick=\"location.href='" . $config->get_url('input') . "'\" value=\"追加\">";
-        echo "<input type=\"submit\" onclick=\"location.href='" . $config->get_url('logout') . "'\" value=\"ログアウト\">
+        echo "<input type=\"submit\" onclick=\"location.href='" . $config->get_url('/input') . "'\" value=\"追加\">";
+        echo "<input type=\"submit\" onclick=\"location.href='" . $config->get_url('/logout') . "'\" value=\"ログアウト\">
         </body>
         </html>";
     }
 
     public function list_page_link()
     {
-        echo '<a href="index.php?action=list">一覧はこちら</a>';
+        echo '<a href="/list">一覧はこちら</a>';
     }
 
     public function delete_success_page()
@@ -135,7 +135,7 @@ class Frontpage
         echo '<html>
     <body>';
         echo 'ログインしました。<br>';
-        echo '<a href="index.php?action=input">入力画面はこちら</a>';
+        echo '<a href="/input">入力画面はこちら</a>';
         echo "</body>
         </html>";
     }
@@ -145,7 +145,7 @@ class Frontpage
         echo '<html>
     <body>';
         echo 'ログインIDとパスワードを入力してください。<br>';
-        echo '<a href="index.php?action=login_page">再ログインはこちら</a>';
+        echo '<a href="/login_page">再ログインはこちら</a>';
         echo "</body>
         </html>";
     }
@@ -155,7 +155,7 @@ class Frontpage
         echo '<html>
     <body>';
         echo 'ログインに失敗しました。';
-        echo '<a href="index.php?action=login_page">再ログインはこちら</a>';
+        echo '<a href="/login_page">再ログインはこちら</a>';
         echo "</body>
         </html>";
     }
@@ -167,7 +167,7 @@ class Frontpage
     <body>';
         unlink($config->get_folder_login() . 'user.txt');
         echo 'ログアウトしました。<br>';
-        echo '<a href="index.php?action=login_page">ログインはこちら</a>
+        echo '<a href="/login_page">ログインはこちら</a>
     </body>
     </html>';
     }
@@ -175,7 +175,7 @@ class Frontpage
     {
     echo "<html>";
     echo "<body>";
-    echo("<form action='index.php?action=login' method='post'>");
+    echo("<form action='/login' method='post'>");
     $this->echo_break_line("ID：<input type='text' name='id'>");
     $this->echo_break_line("パスワード：<input type='text' name='password'>");
     echo "<input type='submit' value='ログイン'>";

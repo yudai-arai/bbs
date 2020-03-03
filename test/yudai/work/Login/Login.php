@@ -27,7 +27,7 @@ class Login
     {
         $frontpage = new Frontpage();
         $config = new Config();
-        if (($_GET['action'] != 'login_page') && ($_GET['action'] != 'login') && ($_GET['action'] != 'login_failed')) {
+        if (($_SERVER['REQUEST_URI'] != '/login_page') && ($_SERVER['REQUEST_URI'] != '/login') && ($_SERVER['REQUEST_URI'] != '/login_failed')) {
             if (!file_exists($config->get_folder_login() . 'user.txt')) {
                 $frontpage->login_page();
                 exit;
